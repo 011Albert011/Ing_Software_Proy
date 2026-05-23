@@ -21,7 +21,7 @@
         <div class="login-container">
             <div class="login-box">
                 <div class="tabs">
-                    <a href="Index.php" class="tab-btn">Iniciar Sesión</a>
+                    <a href="index.php" class="tab-btn">Iniciar Sesión</a>
                     <a href="Registrarse.php" class="tab-btn active">Registrarse</a>
                 </div>
                 <div class="wrapper">
@@ -41,7 +41,7 @@
                         </div>
                         <button type="submit" class="btn">Crear Cuenta</button>
                         <div class="register-link">
-                            <p>¿Ya tienes una cuenta? <a href="login.php">Iniciar Sesión</a></p>
+                            <p>¿Ya tienes una cuenta? <a href="index.php">Iniciar Sesión</a></p>
                         </div>
                     </form>
                 </div>
@@ -68,7 +68,7 @@
 
                     // Verificar que el correo no esté ya registrado
                     if (!$error_msg) {
-                        $revision = "SELECT Id_Usuario FROM Usuario WHERE Correo = ? LIMIT 1";
+                        $revision = "SELECT Id_Usuario FROM usuario WHERE Correo = ? LIMIT 1";
                         if ($stmt = mysqli_prepare($link, $revision)) {
                             mysqli_stmt_bind_param($stmt, "s", $Correo);
                             mysqli_stmt_execute($stmt);
@@ -88,7 +88,7 @@
                         // a 0 y registra al usuario, o actualiza directo en BD.
                         $Privilegio = 1;
 
-                        $query = "INSERT INTO Usuario (Nombre, Correo, Password, Privilegio) VALUES (?, ?, ?, ?)";
+                        $query = "INSERT INTO usuario (Nombre, Correo, Password, Privilegio) VALUES (?, ?, ?, ?)";
 
                         if ($stmt = mysqli_prepare($link, $query)) {
                             mysqli_stmt_bind_param($stmt, "sssi",
@@ -97,7 +97,7 @@
                             if (mysqli_stmt_execute($stmt)) {
                                 mysqli_stmt_close($stmt);
                                 mysqli_close($link);
-                                header("Location: Index.php");
+                                header("Location: index.php");
                                 exit();
                             } else {
                                 $error_msg = "Error al registrar: " . mysqli_error($link);

@@ -24,10 +24,10 @@ if ($row = mysqli_fetch_array($result)) {
         header("Location: IndexPrincipal.php");
         exit();
     } else {
-        header("Location: Index.php");
+        header("Location: index.php");
         exit();
     }
 } else {
-    header("Location: Index.php");
+    header("Location: index.php");
     exit();
 }

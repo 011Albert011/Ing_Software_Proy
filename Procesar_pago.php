@@ -22,7 +22,7 @@ $items = $data['items'] ?? [];
 $PagoTotal = $data['total'] ?? 0;
 $UsuarioID = $_SESSION['id_usuario'] ?? null; 
 $Correo_Usuario = $_SESSION['correo'] ?? null;
-$Nombre_Usuario = $_SESSION['usuario'] ?? null;
+$Nombre_Usuario = $_SESSION['k_username'] ?? null;
 
 if (!$UsuarioID) {
     ob_clean();

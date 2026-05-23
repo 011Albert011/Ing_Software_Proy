@@ -138,37 +138,71 @@ function proceedWithPayment() {
     });
 }
 
-// Checkout
+// Función para comprar directamente sin pasar por el gestor de procesos
 function checkout() {
     if (cart.length === 0) {
         alert("El carrito está vacío");
         return;
     }
 
-    const burstTime = Math.floor(Math.random() * 10) + 30;
+    // Calcular el total a pagar en el cliente
     const totalPagar = cart.reduce((sum, it) => sum + it.price * it.quantity, 0);
-    const processData = {
-        id: `TICKET_${Date.now()}`,
-        items: cart,
-        total: totalPagar,
-        timestamp: Date.now(),
-        originalBurstTime: burstTime,
-        remainingTime: burstTime,
-        status: 'LISTO'
+
+    // Estructurar los datos tal como los espera recibir tu archivo Procesar_pago.php
+    const datosPago = {
+        items: cart.map(it => ({
+            id: it.id,
+            price: it.price,
+            quantity: it.quantity
+        })),
+        total: totalPagar
     };
 
-    // Store process data in localStorage for the process manager (support multiple pending processes)
-    let pendingProcesses = JSON.parse(localStorage.getItem('pendingProcesses') || '[]');
-    pendingProcesses.push(processData);
-    localStorage.setItem('pendingProcesses', JSON.stringify(pendingProcesses));
+    // Deshabilitar temporalmente el botón de compra si tienes uno para evitar doble clic
+    // (Opcional, pero recomendado)
 
-    // Clear cart immediately (UI feedback)
-    cart = [];
-    updateCart();
-    toggleCart();
+    // Enviar la compra directo al servidor usando fetch
+    fetch('Procesar_pago.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datosPago)
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Error en la respuesta del servidor');
+        }
+        return res.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert(data.message); // Muestra "Compra exitosa, ticket enviado e imprimiendo..."
 
-    // Redirect to process manager
-    window.location.href = 'process_manager.php';
+            // Limpiar el carrito en el frontend ya que la compra fue aprobada
+            cart = [];
+            updateCart();
+            
+            // Cerrar el modal/desplegable del carrito si está abierto
+            if (typeof toggleCart === 'function') {
+                toggleCart();
+            }
+
+            // Si Procesar_pago.php generó el PDF y te da la ruta, lo mandamos a imprimir directo
+            if (data.ruta) {
+                window.open(`Imprimir.php?archivo=${data.ruta}`, '_blank');
+            } else {
+                // Si no viene la ruta en el JSON, recargamos para actualizar stock visualmente
+                location.reload();
+            }
+        } else {
+            alert("No se pudo completar la compra: " + data.message);
+        }
+    })
+    .catch(error => {
+        console.error("Error en la pasarela de pago:", error);
+        alert("Hubo un problema de conexión al procesar tu pago. Revisa la consola.");
+    });
 }
 
 

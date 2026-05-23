@@ -1,8 +1,8 @@
 <?php 
-    //esta parte nos ayuda a verificar si el usario tiene permiso de estar en esta pagina
+    // Esta parte nos ayuda a verificar si el usuario tiene permiso de estar en esta página
     session_start(); 
     if(!isset($_SESSION["k_username"])) {
-        header("Location: Index.php");
+        header("Location: index.php");
         exit();
     }
 ?>
@@ -17,7 +17,6 @@
 </head>
 <body>
 
-    <!-- Header -->
     <header class="header ampliado">
         <div class="container">
             <div class="header-content">
@@ -25,33 +24,36 @@
                     <h1>AutoHub</h1>
                 </div>
                 <div class="abajo">
-                        <nav class="nav">
+                    <nav class="nav">
                         <a href="#inicio">Inicio</a>
                         <a href="#productos">Autos</a>
                         <a href="#marcas">Marcas</a>
                         <a href="#financiacion">Financiación</a>
                         <a href="#contacto">Contacto</a>
-                        <a href="process_manager.php">Gestor de Procesos</a>
                         <?php 
-                            // Verificamos si existe un ticket en la sesion
-                            $urlTicket = isset($_SESSION['ultimo_ticket']) ? $_SESSION['ultimo_ticket'] : '#';
+                            // CORRECCIÓN: Si es una ruta absoluta del servidor, extraemos solo el nombre del archivo
+                            $urlTicket = '#';
+                            if (isset($_SESSION['ultimo_ticket']) && $_SESSION['ultimo_ticket'] !== '#') {
+                                $nombreArchivo = basename($_SESSION['ultimo_ticket']);
+                                $urlTicket = "tickets/" . $nombreArchivo;
+                            }
                         ?>
-                        <a href="Imprimir.php?archivo=<?php echo $urlTicket; ?>" 
-                            target="_blank" 
-                            style="<?php echo ($urlTicket == '#') ? 'display:none;' : ''; ?>">
+                        <a href="Imprimir.php?archivo=<?php echo urlencode($urlTicket); ?>" 
+                           target="_blank" 
+                           style="<?php echo ($urlTicket === '#') ? 'display:none;' : ''; ?>">
                             Reimprimir Ticket
                         </a>
+                        <a href="Logout.php">Cerrar Sesión</a>
                     </nav>
                     <div class="cart-icon" onclick="toggleCart()">
                         <span>🛒</span>
                         <span class="cart-count" id="cartCount">0</span>
+                    </div>
                 </div>
-                
             </div>
         </div>
     </header> 
 
-    <!-- Carrito desplegable -->
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-header">
             <h2>Mi Carrito</h2>
@@ -68,7 +70,6 @@
         </div>
     </div>
 
-    <!-- Hero Section -->
     <section class="hero margen-header" id="inicio">
         <div class="hero-content">
             <h2>Encuentra tu próximo auto con AutoHub</h2>
@@ -77,15 +78,20 @@
         </div>
     </section>
 
-    <!-- Productos -->
     <section class="products-section" id="productos">
         <div class="container">
             <h2 class="section-title">Nuestros Productos</h2>
             <div class="products-grid" id="productsGrid">
                 <?php 
-                    // Conexión y consulta a la BD
-                    $link = mysqli_connect("localhost", "root", "", "sistemasii");
-                    $resultado = mysqli_query($link, "SELECT * FROM Carro WHERE Stock > 0 ");
+                    // Conexión y consulta a la BD utilizando 'carro' en minúsculas conforme al .sql
+                    $link = mysqli_connect("sql210.infinityfree.com", "if0_41997562", "pG52HDE7T6H", "if0_41997562_sistemasii");
+                    mysqli_set_charset($link, "utf8mb4");
+
+                    if (!$link) {
+                        die("Error de conexión: " . mysqli_connect_error());
+                    }
+
+                    $resultado = mysqli_query($link, "SELECT * FROM carro WHERE Stock > 0");
                     
                     while($fila = mysqli_fetch_array($resultado)) {
                         $id = $fila['Id_Carro'];
@@ -102,7 +108,7 @@
                             <div class="product-category"><?php echo strtoupper($categoria); ?></div>
                             <div class="product-name"><?php echo $nombre; ?></div>
                             <div class="product-price" data-precio-real="<?php echo $precio; ?>">$<?php echo number_format($precio, 2); ?></div>
-                            <div class="product-description"><?php echo $descripcion; ?></div>
+                            <div class="product-description"><?php echo htmlspecialchars($descripcion, ENT_QUOTES, 'UTF-8'); ?></div>
                             <div class="product-inventario">Inventario: <?php echo $stock; ?></div>
                             <button class="add-to-cart-btn" onclick="addToCart(<?php echo $id; ?>, '<?php echo addslashes($nombre); ?>', <?php echo $precio; ?>)">
                                 Agregar al Carrito
@@ -110,20 +116,19 @@
                         </div>
                     </div>
                 <?php
-                    }
+                    } // <-- CORRECCIÓN: Cerramos correctamente el ciclo de PHP aquí
                     mysqli_close($link);
                 ?>
             </div>
         </div>
     </section>
 
-    <!-- Ofertas -->
     <section class="offers-section" id="ofertas">
         <div class="container">
             <h2 class="section-title">Ofertas Especiales</h2>
             <div class="offers-grid">
                 <div class="offer-card">
-                    <div class="offer-image">�</div>
+                    <div class="offer-image">💰</div>
                     <h3>Financiamiento 0%</h3>
                     <p>Planes sin intereses por tiempo limitado</p>
                 </div>
@@ -141,7 +146,6 @@
         </div>
     </section>
 
-    <!-- Contacto -->
     <section class="contact-section" id="contacto">
         <div class="container">
             <h2 class="section-title">Contacto</h2>
@@ -158,7 +162,7 @@
                         <span class="icon">📧</span>
                         <div>
                             <h4>Email</h4>
-                            <p>info@stylehub.com</p>
+                            <p>info@autohub.com</p>
                         </div>
                     </div>
                     <div class="info-item">
@@ -179,13 +183,12 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>Sobre Nosotros</h4>
-                    <p>StyleHub es tu tienda de moda online de confianza con los mejores estilos.</p>
+                    <p>AutoHub es tu tienda online de confianza con los mejores modelos de vehículos.</p>
                 </div>
                 <div class="footer-section">
                     <h4>Enlaces</h4>
@@ -210,6 +213,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

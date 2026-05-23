@@ -32,7 +32,7 @@ function enviarTicketPorCorreo($email_usuario, $nombre_usuario, $nombre_archivo)
         );
 
         // --- DESTINATARIOS ---
-        $mail->setFrom('autohub2311@gmail.com', 'Sistemas II - AutoHub');
+        $mail->setFrom('autohub2311@gmail.com', 'AutoHub');
         $mail->addAddress($email_usuario, $nombre_usuario);
 
         // --- ADJUNTO ---

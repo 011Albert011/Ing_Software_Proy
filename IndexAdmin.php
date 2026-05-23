@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION["k_username"]) || ($_SESSION["privilegio"] ?? 1) != 0) {
-    header("Location: Index.php");
+    header("Location: index.php");
     exit();
 }
 ?>
@@ -62,7 +62,10 @@ if (!isset($_SESSION["k_username"]) || ($_SESSION["privilegio"] ?? 1) != 0) {
             background: #c44536;
             color: white;
         }
-        /* Modal sin clases nuevas de color */
+        
+        /* ========================================================
+           MODAL OPTIMIZADO Y 100% RESPONSIVO PARA MÓVILES
+           ======================================================== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -72,15 +75,20 @@ if (!isset($_SESSION["k_username"]) || ($_SESSION["privilegio"] ?? 1) != 0) {
             z-index: 2000;
             justify-content: center;
             align-items: center;
+            padding: 12px;
+            box-sizing: border-box;
         }
         .modal-container {
             background: var(--card-bg);
             border-radius: 24px;
             padding: 2rem;
-            width: 90%;
+            width: 100%;
             max-width: 600px;
             border: 1px solid rgba(255,255,255,0.1);
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            box-sizing: border-box;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .modal-container h3 {
             color: var(--accent-color);
@@ -94,6 +102,7 @@ if (!isset($_SESSION["k_username"]) || ($_SESSION["privilegio"] ?? 1) != 0) {
             border: 1px solid rgba(255,255,255,0.2);
             border-radius: 12px;
             color: white;
+            box-sizing: border-box;
         }
         .modal-container label {
             display: block;
@@ -129,20 +138,44 @@ if (!isset($_SESSION["k_username"]) || ($_SESSION["privilegio"] ?? 1) != 0) {
         }
         .low-stock { color: #ffaa66; }
         .out-stock { color: #ff6b6b; }
+
+        .logoAdmin{
+            position: absolute;
+            left: 50%;
+            margin-bottom: 6rem;
+            transform: translateX(-50%);
+            width: 100%;
+            text-align: center;
+            margin: 0;
+        }
+
+        /* Ajustes menores para pantallas táctiles muy compactas */
+        @media (max-width: 480px) {
+            .modal-container {
+                padding: 1.2rem;
+            }
+            .modal-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .modal-buttons button {
+                flex: 1;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <div class="logo">
+                <div class="logoAdmin">
                     <h1>AutoHub Admin</h1>
                 </div>
                 <div class="abajo">
                     <nav class="nav">
                         <a href="IndexPrincipal.php">Tienda</a>
                         <a href="IndexAdmin.php">Gestión</a>
-                        <a href="process_manager.php">Procesos</a>
                         <a href="Logout.php">Cerrar Sesión</a>
                     </nav>
                     <div class="cart-icon">
@@ -161,12 +194,14 @@ if (!isset($_SESSION["k_username"]) || ($_SESSION["privilegio"] ?? 1) != 0) {
 
         <div class="products-grid" id="adminCarsGrid">
             <?php
-            $link = mysqli_connect("localhost", "root", "", "sistemasii");
-            $result = mysqli_query($link, "SELECT * FROM Carro ORDER BY Id_Carro");
+            $link = mysqli_connect("sql210.infinityfree.com", "if0_41997562", "pG52HDE7T6H", "if0_41997562_sistemasii");
+            mysqli_set_charset($link, "utf8mb4");
+            $result = mysqli_query($link, "SELECT * FROM carro ORDER BY Id_Carro");
             while ($car = mysqli_fetch_assoc($result)):
                 $stockClass = ($car['Stock'] <= 0) ? 'out-stock' : (($car['Stock'] < 5) ? 'low-stock' : '');
+                $cleanId = intval($car['Id_Carro']);
             ?>
-            <div class="product-card" data-id="<?= $car['Id_Carro'] ?>">
+            <div class="product-card" data-id="<?= $cleanId ?>">
                 <div class="product-image">
                     <img src="ImagenesProductos/<?= htmlspecialchars($car['Imagen']) ?>" alt="<?= htmlspecialchars($car['Nombre_C']) ?>" onerror="this.src='ImagenesProductos/default.jpg'">
                 </div>
@@ -177,8 +212,8 @@ if (!isset($_SESSION["k_username"]) || ($_SESSION["privilegio"] ?? 1) != 0) {
                     <div class="product-description"><?= htmlspecialchars($car['Descripcion']) ?></div>
                     <div>Stock: <span class="stock-badge <?= $stockClass ?>"><?= $car['Stock'] ?></span></div>
                     <div class="admin-buttons">
-                        <button class="btn-edit-card" onclick="editCar(<?= $car['Id_Carro'] ?>)">Editar</button>
-                        <button class="btn-delete-card" onclick="deleteCar(<?= $car['Id_Carro'] ?>)">Eliminar</button>
+                        <button class="btn-edit-card" onclick="editCar(<?= $cleanId ?>)">Editar</button>
+                        <button class="btn-delete-card" onclick="deleteCar(<?= $cleanId ?>)">Eliminar</button>
                     </div>
                 </div>
             </div>
@@ -186,7 +221,6 @@ if (!isset($_SESSION["k_username"]) || ($_SESSION["privilegio"] ?? 1) != 0) {
         </div>
     </div>
 
-    <!-- Modal para agregar/editar -->
     <div id="adminModal" class="modal-overlay">
         <div class="modal-container">
             <h3 id="modalTitle">Agregar Vehículo</h3>
@@ -240,22 +274,47 @@ if (!isset($_SESSION["k_username"]) || ($_SESSION["privilegio"] ?? 1) != 0) {
             document.getElementById('adminModal').style.display = 'flex';
         }
 
+        /* CORRECCIÓN FINAL DE GESTIÓN DE EDICIÓN */
         function editCar(id) {
             fetch(`admin_actions.php?action=get&id=${id}`)
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Respuesta de red no okey');
+                    }
+                    return res.text(); // Leemos primero como texto puro para evitar caídas silenciosas
+                })
+                .then(text => {
+                    try {
+                        // Intentamos procesar el JSON de forma segura limpiando posibles espacios raros
+                        return JSON.parse(text.trim());
+                    } catch (err) {
+                        console.error("Servidor devolvió texto corrupto o con errores PHP:", text);
+                        throw new Error('El servidor no respondió con un JSON válido.');
+                    }
+                })
                 .then(data => {
-                    if (data.success) {
+                    if (data.success && data.car) {
                         document.getElementById('modalTitle').innerText = 'Editar Vehículo';
                         document.getElementById('carId').value = data.car.Id_Carro;
                         document.getElementById('carName').value = data.car.Nombre_C;
-                        document.getElementById('carCategory').value = data.car.Categoria;
+                        
+                        // Forzamos conversión a minúsculas para coincidir exactamente con el <select>
+                        let categoryValue = data.car.Categoria ? data.car.Categoria.toLowerCase().trim() : 'suv';
+                        document.getElementById('carCategory').value = categoryValue;
+                        
                         document.getElementById('carPrice').value = data.car.Precio;
                         document.getElementById('carStock').value = data.car.Stock;
                         document.getElementById('carDesc').value = data.car.Descripcion;
+                        
+                        // Desplegar modal
                         document.getElementById('adminModal').style.display = 'flex';
                     } else {
-                        alert('Error al cargar los datos');
+                        alert('Error al cargar los datos: ' + (data.message || 'Vehículo no encontrado'));
                     }
+                })
+                .catch(error => {
+                    console.error("Error en Fetch:", error);
+                    alert("No se pudieron cargar los datos de este vehículo. Revisa la consola para más detalles.");
                 });
         }
 
