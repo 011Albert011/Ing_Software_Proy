@@ -1,0 +1,730 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{dashbox}
+\usepackage{courier} 
+\usepackage{bm}
+\usepackage{makeidx}
+\usepackage{fancyhdr}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{ragged2e}
+\usepackage[nopatch]{microtype}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{listingsutf8}
+
+% ========== CONFIGURACIÓN MEJORADA PARA LISTINGS ==========
+% Colores elegantes para el código
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.97}
+
+\lstset{
+    backgroundcolor=\color{backcolour},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    breakatwhitespace=true,
+    columns=fullflexible,
+    frame=single,
+    frameround=tttt,
+    rulecolor=\color{codegray},
+    numbers=left,
+    numberstyle=\tiny\color{codegray},
+    stepnumber=1,
+    numbersep=5pt,
+    showspaces=false,
+    showtabs=false,
+    showstringspaces=false,
+    tabsize=2,
+    captionpos=b,
+    xleftmargin=10pt,
+    xrightmargin=0pt,
+    extendedchars=true,
+    inputencoding=utf8,
+    literate=
+        {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+        {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+        {ñ}{{\~n}}1 {Ñ}{{\~N}}1,
+    % Colores para PHP
+    keywordstyle=\color{codepurple}\bfseries,
+    commentstyle=\color{codegreen},
+    stringstyle=\color{red},
+}
+
+% Configuración específica para PHP
+\lstdefinestyle{phpstyle}{
+    language=PHP,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{codepurple}\bfseries,
+    commentstyle=\color{codegreen},
+    stringstyle=\color{red},
+    breaklines=true,
+    breakatwhitespace=true,
+    showspaces=false,
+    tabsize=2,
+    numbers=left,
+    numberstyle=\tiny\color{codegray},
+    frame=single,
+}
+
+\usepackage{makeidx} %para el indice
+
+\usepackage{fancyhdr}   %  Para personalizar encabezado y pie de página
+\pagestyle{fancy}       % Activar el estilo fancy
+\fancyhf{}              % Limpiar encabezado y pie
+
+% Encabezado superior
+\fancyhead[L]{\textbf{Sistemas Operativos II }}   % Izquierda
+\fancyhead[R]{\textbf{Índice}}    % Derecha
+
+% Línea horizontal debajo del encabezado
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Pie de página 
+\fancyfoot[C]{\thepage} 
+
+\newcommand{\horrule}[1]{\color{black}\rule{\textwidth}{#1}} 
+
+\fancypagestyle{INTRO}{
+  \fancyhf{}
+  \fancyhead[L]{\textbf{Sistemas Operativos II}}
+  \fancyhead[R]{\textbf{Introducción}}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+\fancypagestyle{ARC}{
+  \fancyhf{}
+  \fancyhead[L]{\textbf{Sistemas Operativos II}}
+  \fancyhead[R]{\textbf{Arquitectura del Sistema}}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+
+\fancypagestyle{MANU}{
+  \fancyhf{}
+  \fancyhead[L]{\textbf{Sistemas Operativos II}}
+  \fancyhead[R]{\textbf{Manual Técnico}}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+\fancypagestyle{MANUU}{
+  \fancyhf{}
+  \fancyhead[L]{\textbf{Sistemas Operativos II}}
+  \fancyhead[R]{\textbf{Manual de Usuario}}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+\fancypagestyle{EJ}{
+  \fancyhf{}
+  \fancyhead[L]{\textbf{Sistemas Operativos II}}
+  \fancyhead[R]{\textbf{Ejecución}}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+
+\fancypagestyle{CC}{
+  \fancyhf{}
+  \fancyhead[L]{\textbf{Sistemas Operativos II}}
+  \fancyhead[R]{\textbf{Conclución}}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+\fancypagestyle{BI}{
+  \fancyhf{}
+  \fancyhead[L]{\textbf{Sistemas Operativos II}}
+  \fancyhead[R]{\textbf{Bibliografía}}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+
+\makeindex
+
+\begin{document}
+\begin{titlepage}
+\begin{center}
+
+
+
+    % Espaciado superior
+    \vspace*{1cm}
+    
+    % Encabezado institucional
+    {\scshape\LARGE Benemérita Universidad Autónoma de Puebla \par}
+    \vspace{0.3cm}
+    {\scshape\Large Facultad de Ciencias de la Computación\par}
+    \vspace{0.5cm}
+    {\large Sistemas Operativos II \par}
+    
+    \vspace{1cm}
+    
+    % Logo
+    \includegraphics[scale=0.3]{imagenes/BUAPlogo.png}\\[1.0cm]
+    
+    % Título
+    \usefont{OT1}{bch}{b}{n}
+    \horrule{0.5pt}\\[0.2cm]
+    {\fontsize{20}{24}\bfseries Gestión de Middleware en Aplicaciones Web.\par}
+    \horrule{0.3pt}\\[0.7cm]
+    
+    % Autor
+	{\Large\itshape Jesús Santiago García Torres\par}
+    \vfill     
+    
+	{\Large\itshape Albert Kliuver López Huerta\par}
+    \vfill    
+    
+    {\Large\itshape Angel Manuel Aguila De Ita\par}
+    \vfill
+    
+    
+    % Información inferior
+    {\Large Profesor: Fernando Rodriguez Bernal \par}
+    \vspace{0.3cm}
+    {\large \today\par}
+    
+\end{center}
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\tableofcontents
+\printindex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{INTRO}
+\section{Introducción.}
+
+El presente documento detalla el funcionamiento y la lógica de programación detrás de AutoHub, una plataforma web diseñada para demostrar la aplicación práctica de conceptos fundamentales de Sistemas Operativos. El proyecto utiliza un stack tecnológico integrado por PHP para la lógica de negocio, así como el control de dispositivos de entra y salida, así como la administración del Sistema de Archivos \textbf{(File System)} mediante la creación de tickets de compra en formato .PDF, que a comparación de la practica anterior, se opta esta actualización para una mejor manipulación del archivo creado, por ultimo, la gestión de comunicaciones para el envío de información vía correo electrónico.\\
+
+La estructura y el diseño se fundamentan en \textbf{HTML5} y \textbf{CSS3}, mientras que el dinamismo se logra mediante una integración entre \textbf{PHP} y \textbf{JavaScript}. Esta conexión permite la manipulación de datos en tiempo real para generar archivos tipo PDF que registran la persistencia de las transacciones. Posteriormente, se gestiona la recuperación de estos archivos para su envío al usuario en sesión, garantizando la trazabilidad de la información, integrando un botón para la impresión del ticket y que el usuario pueda tener un control completo de su información de copra.\\
+
+Esta práctica tiene como propósito implementar la teoría del Control de Dispositivos vista en clase, resolviendo problemas de almacenamiento, organización y recuperación de datos. Se pone especial énfasis en el control de dispositivos, siendo mas específicos, una impresora, facilitando la manipulación completa de la información de compra del usuario.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{ARC}
+\section{Arquitectura del Sistema.}
+En esta sección se detalla cómo AutoHub gestiona el control de dispositivos, creando un puente por medio de PHP desde la entrada de datos por mouse, procesamiento en base de datos, gestión de archivos en disco, hasta la salida física por hardware.
+
+La arquitectura se basa en una jerarquía de capas de abstracción. El flujo inicia en la Capa de Aplicación \textbf{(JavaScript)}, escala a la Capa de Servicios \textbf{(PHP/Servidor Web)} y finalmente interactúa con el Kernel del Sistema Operativo para gestionar el acceso a periféricos de salida \textbf{(impresora)} mediante llamadas al sistema.
+
+El proyecto implementa una arquitectura basada en Middleware, facilitando la interoperabilidad entre el frontend (JS) y el backend (PHP/SQL). Se utiliza JSON como mecanismo de mensajería para el transporte de datos, y se han integrado capas de seguridad mediante la gestión de sesiones y un monitor de validación de stock, asegurando que la disponibilidad de recursos sea consistente en todo el ecosistema de la aplicación.
+
+\subsection{Modelo de capas / MVC.}
+AutoHub sigue una arquitectura en capas similar a un patrón MVC básico:
+\begin{itemize}
+    \item \textbf{Vista / Presentación:} HTML, CSS y JavaScript en el navegador que muestran los productos, el carrito y el formulario de compra.
+    \item \textbf{Controlador / Lógica de negocio:} PHP recibe solicitudes HTTP, procesa la compra, valida la sesión, genera tickets y envía correos.
+    \item \textbf{Modelo / Datos:} MySQL almacena usuarios, inventario, transacciones y registros de compra.
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{c}
+Cliente (HTML/CSS/JS) \\
+\(\downarrow\) \\
+Servidor Apache + PHP \\
+\(\downarrow\) \\
+Base de datos MySQL \\
+\(\downarrow\) \\
+Sistema de archivos / impresora
+\end{tabular}
+\end{center}
+
+Este enfoque separa responsabilidades, facilita la evolución del sistema y mejora la seguridad porque el cliente no toma decisiones críticas sobre la base de datos ni el almacenamiento.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{ARC}
+
+\subsection{Seguridad desde el diseño.}
+La seguridad se integra desde la arquitectura:
+\begin{itemize}
+    \item \textbf{Principio de mínimo privilegio:} El servicio PHP debe utilizar un usuario de base de datos con permisos restringidos únicamente a las operaciones necesarias (SELECT, INSERT, UPDATE, DELETE) sobre las tablas de la aplicación.
+    \item \textbf{Aislamiento de recursos:} El backend solo escribe en la carpeta \texttt{tickets/} y no en otras áreas del servidor, reduciendo el riesgo de modificación no autorizada.
+    \item \textbf{Seguridad de sesiones:} Las variables de sesión se usan para autenticar al usuario antes de permitir acciones sensibles como comprar, generar ticket o imprimir.
+    \item \textbf{Validación server-side:} Todas las entradas se revisan en PHP, no solo en JavaScript, para evitar inyección de datos y manipulación del cliente.
+\end{itemize}
+
+\subsubsection{Análisis de Seguridad del Sistema.}
+El sistema AutoHub implementa múltiples capas de seguridad para proteger la integridad de los datos, la autenticación de usuarios y la prevención de ataques comunes. A continuación, se presenta un reporte detallado del estado de seguridad actual, incluyendo vulnerabilidades identificadas, medidas implementadas y controles preventivos.
+
+\begin{itemize}
+    \item \textbf{Prevención de Inyección SQL (SQLi):} Se identificaron consultas SQL vulnerables a inyección en módulos críticos como login, registro y procesamiento de pagos. Para mitigar este riesgo, se implementaron \textit{prepared statements} utilizando \texttt{mysqli\_prepare()}, \texttt{mysqli\_stmt\_bind\_param()} y \texttt{mysqli\_stmt\_execute()}. Esta técnica separa la lógica SQL de los datos de entrada, eliminando la posibilidad de ejecución de código malicioso a través de parámetros concatenados.
+    
+    \item \textbf{Autenticación Segura con Hashing de Contraseñas:} Las contraseñas se almacenaban inicialmente en texto plano, exponiendo credenciales en caso de brecha de base de datos. Se implementó hashing fuerte usando \texttt{password\_hash()} con algoritmo \texttt{PASSWORD\_BCRYPT}, que genera hashes irreversibles con sal automática. La verificación se realiza mediante \texttt{password\_verify()}, asegurando compatibilidad con hashes existentes y migración automática de contraseñas legadas al primer login exitoso.
+    
+    \item \textbf{Protección contra Ataques de Sesión:} Se detectó vulnerabilidad a \textit{session fixation}, donde un atacante podría fijar un ID de sesión conocido. Tras autenticación exitosa, se regenera el ID de sesión con \texttt{session\_regenerate\_id(true)}, invalidando sesiones potencialmente comprometidas y fortaleciendo la protección contra robo de sesiones.
+    
+    \item \textbf{Integridad Transaccional en Operaciones Críticas:} En el módulo de pagos, operaciones múltiples (crear ticket, actualizar stock, insertar detalles) se ejecutaban sin atomicidad, risking inconsistencias en caso de error. Se implementaron transacciones atómicas usando \texttt{mysqli\_begin\_transaction()}, \texttt{mysqli\_commit()} y \texttt{mysqli\_rollback()}, garantizando que todas las operaciones se completen exitosamente o se reviertan por completo, manteniendo la consistencia de la base de datos.
+    
+    \item \textbf{Validación y Sanitización de Entradas:} Entradas de usuario no se validaban adecuadamente, permitiendo datos malformados o maliciosos. Se agregó sanitización de correos electrónicos con \texttt{filter\_var()} y conversión explícita de tipos (int, float) antes de consultas SQL, previniendo inyecciones y errores de tipo que podrían comprometer la lógica de negocio.
+    
+    \item \textbf{Auditoría y Monitoreo de Eventos:} Para mejorar la trazabilidad, se preparó un sistema básico de logs para registrar eventos críticos como intentos de login fallidos, pagos procesados y actualizaciones de stock. Esto facilita la detección de anomalías y el cumplimiento de requisitos de auditoría, aunque su implementación completa queda pendiente para futuras iteraciones.
+\end{itemize}
+
+Estas implementaciones fortalecen la autenticación fuerte, permisos granulares y prevención de vulnerabilidades comunes como SQLi, XSS (mediante \texttt{htmlspecialchars()}) y CSRF (preparado para tokens).
+
+
+\subsection{Control de acceso y roles.}
+Para mantener la integridad del sistema se definen roles y niveles de acceso:
+\begin{itemize}
+    \item \textbf{Usuario autenticado:} Puede navegar, gestionar su carrito, pagar y recibir el comprobante.
+    \item \textbf{Administrador / Gestión:} Si existe, debe tener acceso solo a funciones de inventario y consulta de registros, no al manejo de datos sensibles que no le correspondan.
+\end{itemize}
+
+Cada petición sensible en el servidor debe verificar el rol y el estado de la sesión antes de permitir cualquier modificación de datos.
+
+\subsection{Conexion entre lenguajes (PHP y JavaScript).}
+El sistema implementa una comunicación cliente-servidor utilizando \textbf{JSON} como formato de intercambio de datos. Esta comunicación permite transferir la información del carrito de compras, gestionada como un array en el frontend \textbf{(JavaScript)}, hacia el backend \textbf{(PHP)} para su procesamiento. Una vez recibidos, los datos son insertados en la base de datos, lo que posibilita la generación del comprobante \textbf{(ticket)} y su posterior envío por correo electrónico, a su vez redirigiendo al usuario para que pueda hacer la impresión del \textbf{ticket}.
+
+El uso de la API fetch permite una comunicación asíncrona. Esto evita el bloqueo del hilo principal de ejecución del navegador mientras el backend procesa la transacción, garantizando que la interfaz de usuario se mantenga responsiva mientras el SO gestiona las operaciones de I/O en segundo plano.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{ARC}
+
+\subsection{Persistencia de Datos.}
+La principal distinción entre el proyecto previo y la implementación actual radica en el enfoque adoptado para la persistencia de los datos. Mientras que en el primer proyecto la información era gestionada de forma volátil, almacenándose únicamente en memoria temporal durante la sesión activa en el servidor, la nueva versión introduce un mecanismo de almacenamiento permanente.
+
+En esta implementación, se ha optado por generar y organizar archivos de texto que registran de manera estructurada los detalles de cada compra realizada por el cliente, incluyendo los productos adquiridos y el monto total correspondiente. Este enfoque no solo garantiza la conservación de la información más allá de la sesión actual, sino que también sienta las bases para futuras funcionalidades como el historial de compras o la generación de reportes.
+
+\subsection{Permisos de Acceso.}
+Para garantizar que el sistema pueda crear y modificar los archivos necesarios dentro del directorio \texttt{tickets}, es fundamental configurar adecuadamente los permisos de escritura en el sistema de archivos.
+
+En entornos Windows que utilizan WAMP (Windows, Apache, MySQL, PHP), los permisos se asignan a través de las propiedades del directorio. Específicamente, se debe conceder al usuario bajo el cual se ejecuta el servicio de Apache los permisos de \textit{Modificar} y \textit{Escribir} sobre la carpeta destinada al almacenamiento de los tickets. Esta configuración asegura que el backend tenga los privilegios necesarios para la creación y modificación de archivos durante la ejecución del sistema.
+
+\subsection{Administración de Entrada y Salida.}
+Para la salida física, el sistema utiliza un puente de software (Imprimir.php) que actúa como interfaz entre el navegador y el hardware. Al ejecutar la función window.print(), se invoca al Spooler de Impresión del Sistema Operativo. Este componente gestiona una cola de trabajos, permitiendo que el CPU se libere rápidamente mientras el Driver de la impresora traduce el archivo PDF a lenguaje de control de hardware (ESC/P) para su impresión final.
+
+\subsection{Monitor de Integridad y Validación de Recursos (Middleware).}
+Cuando se realiza la compra, ya no solo se ejecuta y se manda el ticket, ahora al implementar un inventario, lo que hacemos es interceptar la petición y realizamos una verificación previa. Se revisa (vía SQL) cuantas unidades quedan realmente de ese vehículo, esta consulta es vital, ya que el carrito de compras usa memoria volátil, siendo nuestra base de datos la única fuente de datos reales.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{ARC}
+
+\begin{itemize}
+    \item \textbf{JavaScript:} Por parte del cliente tenemos la gestión de la interacción con el usuario en tiempo real.
+
+    \item \textbf{PHP:} El servidor, que procesa la lógica y las reglas del sistema, actuando el \textbf{Middleware de integración}, permitiendo que una acción en la interfaz (JS), resulte en un cambio físico en el disco duro (SQL).
+
+    \item \textbf{SQL:} Los datos que mantienen la persistencia y el estado del inventario.
+
+    \item \textbf{Servicio de Mensajería:} JSON es un protocolo de intercambio. Sin él, PHP y JavaScript no podrían compartir estructuras de datos complejas (como una lista de varios autos con diferentes cantidades). El flujo sería: \textit{JS (JSON.stringify) -> HTTP POST -> PHP (jsondecode)}.
+
+    Al usarlo de esta manera se garantiza que la información es independiente de la plataforma, lo cual es un principio fundamental del middleware.
+
+    \item \textbf{Seguridad y Validación:}
+    \begin{itemize}
+        \item \textbf{Autenticación:} Al tener variables de sesión, ya estamos ocupando middleware, ya que verificamos la identidad del usuario antes de permitirle tocar los recursos.
+        \item \textbf{Validación de Stock:} Esta nueva integración en el proyecto actúa como un \textbf{Middleware de Integración de Recursos}, verificando que los productos mostrados y los que se intentan comprar coincidan con la realidad física de la base de datos, protegiendo la integridad del sistema.
+    \end{itemize}
+\end{itemize}
+
+    
+\subsection{Manejo de procesos e hilos.}
+
+Para abordar el criterio de concurrencia y manejo de procesos, AutoHub implementa un mecanismo de `Web Workers` (hilos de ejecución en segundo plano del navegador) en la capa de presentación, permitiendo simular la ejecución paralela de tareas sin bloquear la interfaz de usuario.
+
+\subsubsection{Arquitectura de concurrencia.}
+
+La implementación utiliza dos hilos (threads) en la capa cliente:
+
+\begin{itemize}
+    \item \textbf{Hilo principal (Main Thread):} Controla la interfaz gráfica, procesa eventos del usuario, y actualiza el DOM (estructura de la página).
+    \item \textbf{Hilo secundario (Web Worker):} Ejecuta tareas de validación (comprobar stock disponible) sin interrumpir la experiencia del usuario. Este hilo se comunica con el hilo principal únicamente a través de mensajes (postMessage).
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{ARC}
+
+\subsubsection{Flujo de ejecución concurrente.}
+
+Cuando el usuario intenta agregar un producto al carrito, el flujo es:
+
+\begin{enumerate}
+    \item El hilo principal solicita el stock a \texttt{getStock.php} mediante \textbf{fetch} (llamada asíncrona).
+    \item El servidor devuelve la cantidad disponible de productos.
+    \item El hilo principal envía un mensaje al Web Worker: \texttt{stockWorker.postMessage(...)} con la información.
+    \item \textbf{Sincronización:} El Web Worker ejecuta la validación en paralelo sin bloquear la UI.
+    \item El worker devuelve la respuesta al hilo principal: \texttt{onmessage}.
+    \item Si el stock es suficiente, el producto se agrega al carrito; de lo contrario, se muestra una notificación.
+\end{enumerate}
+
+Este mecanismo simula una estructura de productor-consumidor (producer-consumer pattern) donde el hilo principal actúa como productor de solicitudes de validación y el worker como consumidor que procesa dichas solicitudes.
+
+\subsubsection{Protección contra condiciones de carrera.}
+
+Aunque la validación inicial ocurre en el cliente (worker), la protección definitiva contra \textbf{race conditions} (conflictos cuando múltiples procesos acceden al mismo recurso) ocurre en el servidor:
+
+\begin{itemize}
+    \item En \texttt{Procesar\_pago.php}, antes de actualizar el stock, se realiza una consulta a la base de datos para obtener el valor actual más reciente.
+    \item Se compara este valor con la cantidad solicitada; solo si hay suficiente stock, se procede a la actualización.
+    \item Este enfoque en capas asegura que, aunque dos usuarios intenten comprar simultáneamente (desde Web Workers diferentes en sus navegadores), la base de datos mantendrá la consistencia del inventario.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{ARC}
+
+\subsubsection{Componentes involucrados.}
+
+\begin{itemize}
+    \item \textbf{worker.js:} Define la lógica del Web Worker. Recibe mensajes del hilo principal y responde con validaciones.
+    \item \textbf{script.js:} Comunica eventos del usuario (agregar al carrito) y coordina la sincronización entre el hilo principal y el worker.
+    \item \textbf{getStock.php:} Proporciona datos de stock en tiempo real desde la base de datos.
+    \item \textbf{Procesar\_pago.php:} Valida nuevamente el stock y realiza la actualización atómica (sin interrupciones) en la base de datos.
+\end{itemize}
+
+Esta implementación demuestra los conceptos fundamentales de concurrencia: ejecución paralela de tareas, comunicación entre hilos mediante mensajes, y sincronización para evitar conflictos de acceso a recursos compartidos.
+
+
+
+
+\newpage%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{MANU}
+\section{Manual Técnico: Arquitectura de Software y Lógica de Implementación.}
+En este apartado se describen los componentes críticos del sistema AutoHub, detallando cómo la lógica de programación imprime archivos PDF\textbf{(Ticket)}.\\
+\subsection{Módulo de Gestión de Impresión(I/O).}
+El siguiente script implementa la función \textbf{Impresion}.
+
+\begin{lstlisting}[style=phpstyle]
+<?php
+// Recibimos el nombre del archivo y verificamos el archivo
+$pdf = $_GET['archivo'] ?? '';
+if ($pdf && !file_exists($pdf)) {
+    die("Error: El ticket físico no se encontró en el servidor.");}
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Imprimiendo Ticket - AutoHub</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+    <?php if ($pdf): ?>
+        <iframe src="<?php echo htmlspecialchars($pdf); ?>" id="ticketFrame"></iframe>
+    <?php else: ?>
+        <p>No se especificó ningún ticket para imprimir.</p>
+    <?php endif; ?>
+    <script>
+        const frame = document.getElementById('ticketFrame');
+        function iniciarImpresion() {
+            if (!frame) return;
+            try {
+                frame.contentWindow.focus();
+                frame.contentWindow.print();    
+            } catch (e) {
+                window.print();
+            }
+        }
+\end{lstlisting}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{MANUU}
+ \begin{lstlisting}[style=phpstyle, caption=Código de impresión de tickets]]
+        if (frame) {
+            frame.onload = function() {
+                setTimeout(iniciarImpresion, 1000);
+            };
+        }
+    </script>
+</body>
+</html>
+\end{lstlisting}
+
+\subsection*{Descripción del funcionamiento:} 
+Esta sección implementa la Gestión de Dispositivos de Salida. El script actúa como una interfaz de bajo nivel entre el navegador y el hardware de impresión. Primero, realiza una validación en el Sistema de Archivos mediante la función \textbf{file exists}, asegurando la integridad referencial antes de asignar recursos de memoria. Posteriormente, utiliza un elemento \textbf{iframe} para cargar el recurso PDF en el buffer del navegador. A través de la función \textbf{window.print()}, se envía una señal de interrupción al Sistema Operativo, invocando al Spooler de Impresión y al driver del periféricox para transformar los datos digitales en una salida física.
+
+
+\begin{lstlisting}[style=phpstyle, caption=Gestión de directorios y nomenclatura de archivos]
+<?php 
+    // Verificamos si existe un ticket en la sesion
+    $urlTicket = isset($_SESSION['ultimo_ticket']) ?
+    $_SESSION['ultimo_ticket'] : '#';
+?>
+
+<a href="Imprimir.php?archivo=<?php echo $urlTicket; ?>"
+    target="_blank"
+    style="<?php echo ($urlTicket == '#') ? 'display:none;' : ''; ?>">
+    Reimprimir Ticket
+</a>
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{MANUU}
+
+\subsection*{Descripción del funcionamiento:} 
+Este fragmento de código demuestra la administración de la Persistencia de Estado mediante el uso de variables de sesión. El servidor utiliza un espacio de memoria RAM (segmento de datos de la sesión) para almacenar un puntero hacia el último recurso generado en el almacenamiento secundario. El uso de operadores ternarios en PHP permite una gestión dinámica de la interfaz, donde el enlace de impresión se comporta como un objeto condicional: si el puntero existe en la tabla de descriptores de la sesión, se habilita el acceso al archivo; de lo contrario, el recurso se mantiene oculto para prevenir fallos de acceso a archivos no encontrados (File Not Found errors).
+
+\begin{lstlisting}[style=phpstyle]
+if(data.success) {
+    // 1. Informamos al usuario (Este alert ayuda a que el navegador 
+    // permita el popup)
+    alert(data.message);
+
+    // 2. Si el servidor nos envió la ruta del archivo físico
+    if(data.ruta) {
+        // Abrimos nuestro puente 'Imprimir.php' pasando la ruta 
+        // real del ticket
+        const urlImpresion = 'Imprimir.php?archivo=' +
+        encodeURIComponent(data.ruta);
+        const ventanaImpresion = window.open(urlImpresion, '_blank');
+        
+        if (!ventanaImpresion) {
+            alert('Por favor, permite las ventanas emergentes para que el
+            ticket se imprima automáticamente.');
+        }
+    }
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{MANUU}
+\subsection*{Descripción del funcionamiento:} 
+Implementa la lógica de Comunicación Asíncrona y manejo de eventos de usuario. Tras recibir una respuesta exitosa del backend (formato JSON), el sistema recupera la ruta del nodo recién creado en el servidor. Debido a las políticas de seguridad del Kernel del Navegador, la apertura del periférico de salida debe ser consecuencia directa de una acción del usuario; por ello, se integra una validación de \textbf{ventanaImpresion}. Este bloque garantiza que el flujo de datos entre la lógica de negocio (pago) y la gestión de I/O (impresión) sea continuo, enviando la ruta del archivo como un parámetro codificado para asegurar que el Sistema Operativo localice correctamente el recurso en el disco.
+
+\subsection{Módulo de Gestión de Inventario (Middleware).}
+El siguiente script se implementa la logica de verificación de ineventario.
+
+\subsection*{Descripción del funcionamiento:} 
+Despues de hacer la conexión a la base de datos,hacemos el primer filtro, solo le pedimos a la base de datos que nos muestre los vehiculos cuyo inventario sea mayor a "0".
+
+\begin{lstlisting}[style=phpstyle]
+<?php
+$link = mysqli_connect("localhost", "root", "", "sistemasii");
+$resultado = mysqli_query($link, "SELECT * FROM Carro WHERE Stock > 0");
+?>
+\end{lstlisting}
+
+\subsection*{Descripción del funcionamiento:} 
+Despues en \textit{"Procesar pago"} lo que hacemos es una validación en la compra.
+Primero seleccionamos en la tabla \textit{carro}, en el atributo de \textit{Stock} y nos dirigimos al mismo carro que compro el usuario por medio de su ID.
+Luego convertimos ese resultado en un arreglo asociativo, lo que nos permite acceder al valor del Stock por su nombre de columna."
+Ya solo al final obtenemos ese valor exacto de la posición exacta.
+
+\begin{lstlisting}[style=phpstyle]
+<?php
+$restStock = mysqli_query($link, "SELECT Stock FROM carro where
+Id_Carro = '$Id_Producto'");
+$filastock = mysqli_fetch_assoc($restStock);
+$stockDisponible = $filastock['Stock'];
+?>
+\end{lstlisting}
+
+\subsection*{Descripción del funcionamiento:} 
+Ya con la variable que nos indica en realidad la cantidad de unidades que hay por vehiculo, si es que existen las unidades que quiere el cliente, hacemos el decremento, si no, le mandamos un mensaje de que no hay la cantidad que desea.
+
+\begin{lstlisting}[style=phpstyle]
+if($stockDisponible >= $Cantidad) {
+    // actualizamos el recurso
+    $nuevoStock = $stockDisponible - $Cantidad;
+    mysqli_query($link, "UPDATE carro set Stock = $nuevoStock 
+                         WHERE Id_Carro = '$Id_Producto'");
+
+    $Agre_Detalles = "INSERT INTO detalles_t(Id_Ticket, Id_Carro, 
+                      Precio_Unitario, Cantidad) 
+                      VALUES ('$Id_Ticket', '$Id_Producto', 
+                              '$Precio', '$Cantidad')";
+    if(!mysqli_query($link, $Agre_Detalles)) {
+        $TodoBien = false;
+        break;
+    }
+} else {
+    ob_clean();
+    // si no hay suficiente stock
+    echo json_encode(['success' => false, 'message' => 
+          "Stock insuficiente para un modelo seleccionado."]);
+    mysqli_close($link);
+    exit;
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{MANUU}
+\section{Manual de Usuario.}
+\subsection{Funcionamiento.}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Acceso al Sistema.}  Abrimos nuestro navegador y nos dirigimos a 
+    \textbf{localhost/AutoHub/Registrase.php}, despues ingresaremos el nombre que queremos como usuario, un correo personal y una contraseña.
+    
+    \begin{center}
+		\includegraphics[width=0.9\linewidth]{imagenes/Registrase.png} 
+	\end{center}
+    
+  
+  	 \item \ Una vez ingreasados nuestros datos, se nos redirigirá a Login.php, donde ingresaremos nuestro usuario y contraña. Como evidencia de que los datos son almacenados igual se anexa una imagen de la base de datos.
+  	 
+  	 \begin{center}
+		\includegraphics[width=0.9\linewidth]{imagenes/Login.png} 
+	\end{center}
+	
+	\begin{center}
+		\includegraphics[width=0.9\linewidth]{imagenes/SQL.png} 
+	\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{MANUU}
+  	 
+  	 \item \textbf{Panel Principal (Index).} Una vez que nuestro usuario alla sido validado, entraremos al IndexPrincipal.php. Aqui se prodra ver el catálogo de los autos, incluyendo la cantidad disponibles de cada uno. Gracias a que nuestra sesion esta activa en la Ram del servidor, se prodra navegar sin que el sistema  vuelva a pedir nuestros datos, tambien podremos ver los diferentes servios que llega a ofrecer la pagina.
+  	 
+  	 \begin{center}
+		\includegraphics[width=0.8\linewidth]{imagenes/IndexPrincipal1.png} 
+	\end{center}
+	
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{imagenes/IndexPrincipal2.png} 
+	\end{center}
+	
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{imagenes/IndexPrincipal3.png} 
+	\end{center}
+  	 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{MANUU}  	 
+  	 \item \textbf{Gestión de Compras.}Al hacer click en el boton de 'Agregar al Carrito' de cualquier vehiculo, incluso si hace mas de una vez al mismo, se observara como el contador y el total se actualiza al instante (esto ocurre en la memoria del navegador),si seleccionas mas autos de los que existen, te saldra un mensaje de que no hay suficiente inventario, si decides ya no querer un producto, se podra realizar un click al bote de basura para eliminar dicho producto y eliminar espacio en la lista.
+  	 
+  	 \begin{center}
+		\includegraphics[width=0.7\linewidth]{imagenes/Carrito.png} 
+	\end{center}
+  	 
+  	 \begin{center}
+		\includegraphics[width=0.7\linewidth]{imagenes/Carrito2.png} 
+	\end{center}
+  	 
+  	 \item \textbf{Finalización / Cierre de Sesión.}Al cerrar la pestaña del navegador, el proceso se 'mata' y toda la información del carrito y de la sesión activa se borrará por seguridad.
+  	 
+  	 \begin{center}
+		\includegraphics[width=0.7\linewidth]{imagenes/Cierre.png} 
+	\end{center}
+ 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\thispagestyle{MANUU}  	 
+  	 \item \textbf{Recibo de correo.}Al hacer clic en el botón \textit{Comprar}, el contenido del carrito se almacena en un archivo de texto dentro de la carpeta \textbf{tickets} y se envía al cliente un correo electrónico de confirmación adjuntando dicho comprobante.
+  	 
+  	 \begin{center}
+		\includegraphics[width=0.9\linewidth]{imagenes/Compra.png} 
+	\end{center}
+	
+	\begin{center}
+		\includegraphics[width=0.9\linewidth]{imagenes/Correo.png} 
+	\end{center}
+	
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{imagenes/PDF.png} 
+	\end{center}
+
+\newpage
+\thispagestyle{MANUU} 
+  	 \item \textbf{Gestión de Salida (Impresión de Ticket):} Al confirmar la transacción, el sistema procesa la respuesta del servidor y redirige el flujo hacia el módulo de impresión. Como se observa en la siguiente imagen, el navegador invoca la interfaz de impresión del Sistema Operativo, permitiendo la transferencia de datos desde el buffer de memoria hacia la unidad física.
+  	 
+  	 \begin{center}
+		\includegraphics[width=0.9\linewidth]{imagenes/Compra.png} 
+	\end{center}
+	
+	\begin{center}
+		\includegraphics[width=0.9\linewidth]{imagenes/Compra2.png} 
+	\end{center}
+
+\newpage
+\thispagestyle{MANUU} 	 
+  	 
+  	 \item \textbf{Finalización / Cierre de Sesión.}Al cerrar la pestaña del navegador, el proceso se 'mata' y toda la información del carrito y de la sesión activa se borrará por seguridad.
+  	 
+  	 \begin{center}
+		\includegraphics[width=0.9\linewidth]{imagenes/Cierre.png} 
+	\end{center}
+ 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{MANUU}
+
+\subsection{Manejo de Errores.}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Contraseña o Usuario Incorrecto:} Cuando el usuario coloca mal su información y no se encuentra ningún parentesco con lo almacenado en la base de datos, al usuario le va a salir una leyenda de que coloco mal su información.
+    
+    \begin{center}
+		\includegraphics[width=0.9\linewidth]{imagenes/Error.png} 
+	\end{center}
+    
+    \item \textbf{Entrar sin Iniciar Sesión:} Si el usuario intenta acceder al IndexPrincipal mediante la URL directa en el navegador, este no podrá hacerlo. El sistema ejecutará el código de validación inicial y, al detectar que no existe una sesión activa en la memoria volátil del servidor, interrumpirá el proceso de renderizado y redirigirá al usuario automáticamente al Login.
+    
+    \begin{center}
+		\includegraphics[width=0.9\linewidth]{imagenes/Cierre.png} 
+	\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{MANUU}
+    \item \textbf{Inventario insuficiente:} Si el usuario intenta comprar mas autos de los que hay disponibles, le saldra una mensaje que le indicara que no hay sufiente en el invetario y no le permitira realizar la compra.
+    
+    \begin{center}
+		\includegraphics[width=0.9\linewidth]{imagenes/inv.png} 
+	\end{center}
+\end{itemize}
+
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{CC}
+\section{Conclusión.}
+El desarrollo del proyecto \textbf{AutoHub} ha permitido consolidar los conceptos fundamentales sobre la arquitectura de sistemas operativos, específicamente en las áreas de gestión de memoria, sistemas de archivos y administración de dispositivos de entrada/salida (E/S).
+
+A lo largo del desarrollo, se logró una integración profunda entre los distintos niveles de abstracción del sistema:
+
+\begin{itemize}
+\item \textbf{Gestión de Memoria y Estados:} Se diferenció el uso de memoria volátil en el cliente (JavaScript) para la lógica de usuario, frente al uso de segmentos de memoria protegida en el servidor (PHP Sessions). Esta última actúa como un descriptor de recursos que permite la persistencia de estado durante el ciclo de vida de la transacción.
+\item \textbf{Administración del Sistema de Archivos:} La implementación de un mecanismo de persistencia basado en archivos PDF en el directorio \texttt{tickets} demuestra el control de nodos en el almacenamiento secundario. La nomenclatura única basada en \textit{timestamps} garantiza la integridad de los datos y evita colisiones en la tabla de archivos del sistema operativo.
+\item \textbf{Control de Dispositivos y Comunicación Software-Hardware:} El mayor avance de esta versión es la implementación de un puente de E/S. Mediante llamadas al sistema (\textit{System Calls}) invocadas desde el navegador, el proyecto logra comunicarse con el \textbf{Spooler de Impresión} del sistema operativo host, gestionando la salida física de datos hacia un periférico (Epson) de manera asíncrona.
+\item \textbf{Verificacion por medio del Middleware:} La incorporación de \textbf{PHPMailer} y la integración de protocolos de comunicación vía \textbf{JSON} aseguran que el flujo de información no solo sea persistente, sino también transportable entre diferentes procesos del sistema. Asimismo, la configuración de permisos y el manejo de rutas relativas subrayan la importancia de la seguridad y el direccionamiento en entornos de despliegue reales.
+
+En conclusión, \textbf{AutoHub} se consolida como un ecosistema funcional que ejemplifica el ciclo de vida completo del procesamiento de datos: desde la captura en la capa de aplicación, el procesamiento en la capa de servicios, hasta la administración física de hardware. Esta arquitectura no solo optimiza el uso de recursos, sino que cumple con los estándares de interoperabilidad y gestión de periféricos exigidos en la ingeniería de sistemas modernos.
+
+\end{itemize}
+\newpage
+\section{Referencias.}
+\thispagestyle{BI}
+\begin{justify}
+\begin{thebibliography}{99}
+
+\bibitem{Nixon2021} Nixon, R. \textit{Learning PHP, MySQL \& JavaScript: With jQuery, CSS \& HTML5} (6th ed.). O'Reilly Media, 2021.
+
+\bibitem{Stauffer2019} Stauffer, M. \textit{Laravel: Up \& Running} (2nd ed.). O'Reilly Media, 2019.
+
+
+\end{thebibliography}
+\end{justify}
+
+
+
+\end{document}

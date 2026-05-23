@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Formulario de Pago - Tarjeta de Crédito</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0c1b2f, #1a2a40);
+            padding: 20px;
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 32px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Layout de dos columnas */
+        .payment-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        /* Columna izquierda: vista previa tarjeta */
+        .card-preview {
+            flex: 1.2;
+            min-width: 260px;
+        }
+
+        /* Columna derecha: formulario */
+        .form-section {
+            flex: 1.8;
+            min-width: 280px;
+        }
+
+        /* Estilo de la tarjeta virtual */
+        .credit-card {
+            background: linear-gradient(145deg, #2d3e5f, #1b2a41);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.4);
+            color: white;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .credit-card::before {
+            content: "";
+            position: absolute;
+            top: -30%;
+            left: -20%;
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+        }
+
+        .card-brand {
+            text-align: right;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .card-number-display {
+            font-size: 22px;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            word-break: break-word;
+            font-family: monospace;
+            font-weight: 500;
+            background: rgba(0,0,0,0.3);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .card-holder-area, .card-expiry-area {
+            font-size: 14px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .card-holder-name, .card-expiry-date {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Estilos del formulario */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #eef4ff;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #f1f5f9;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            transition: 0.2s;
+            outline: none;
+            font-weight: 500;
+        }
+
+        input:focus {
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+        }
+
+        .row-2cols {
+            display: flex;
+            gap: 20px;
+        }
+
+        .row-2cols .form-group {
+            flex: 1;
+        }
+
+        .btn-pay {
+            width: 100%;
+            padding: 15px;
+            background: #2c7da0;
+            border: none;
+            border-radius: 40px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 10px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+        }
+
+        .btn-pay:hover {
+            background: #1f5e7a;
+            transform: scale(0.98);
+        }
+
+        /* Timer / tiempo restante */
+        .timer-area {
+            margin-top: 20px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 60px;
+            padding: 10px 16px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .timer-label {
+            font-size: 14px;
+            color: #cbd5e6;
+        }
+
+        .timer-count {
+            font-family: monospace;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #facc15;
+        }
+
+        /* responsive */
+        @media (max-width: 760px) {
+            .container {
+                padding: 18px;
+            }
+            .card-number-display {
+                font-size: 18px;
+                letter-spacing: 2px;
+            }
+            .row-2cols {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+
+        /* mensaje de validación */
+        .error-msg {
+            color: #ffb3b3;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="payment-wrapper">
+        <!-- VISTA PREVIA DE LA TARJETA (lado izquierdo) -->
+        <div class="card-preview">
+            <div class="credit-card">
+                <div class="card-brand">💳 CREDIT</div>
+                <div class="card-number-display" id="cardNumberPreview">#### #### #### ####</div>
+                <div class="card-details">
+                    <div class="card-holder-area">
+                        TITULAR
+                        <div class="card-holder-name" id="cardHolderPreview">TU NOMBRE</div>
+                    </div>
+                    <div class="card-expiry-area">
+                        VENCE
+                        <div class="card-expiry-date" id="cardExpiryPreview">MM/AA</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Temporizador estilo "Time left to pay" -->
+            <div class="timer-area">
+                <span class="timer-label">⏱️ Tiempo restante</span>
+                <span class="timer-count" id="timerDisplay">05:00</span>
+            </div>
+        </div>
+
+        <!-- FORMULARIO DE PAGO (lado derecho) -->
+        <div class="form-section">
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label>Número de tarjeta</label>
+                    <input type="text" id="cardNumber" maxlength="19" placeholder="1234 5678 9012 3456" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label>Nombre del titular (como en tarjeta)</label>
+                    <input type="text" id="cardHolder" placeholder="JUAN PEREZ" autocomplete="off">
+                </div>
+
+                <div class="row-2cols">
+                    <div class="form-group">
+                        <label>Fecha vencimiento</label>
+                        <input type="text" id="expiryDate" maxlength="5" placeholder="MM/AA">
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="password" id="cvv" maxlength="4" placeholder="123">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-pay">Pagar ahora</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // -------- Elementos DOM ----------
+    const cardNumberInput = document.getElementById('cardNumber');
+    const cardHolderInput = document.getElementById('cardHolder');
+    const expiryInput = document.getElementById('expiryDate');
+    const cvvInput = document.getElementById('cvv');
+
+    const previewNumber = document.getElementById('cardNumberPreview');
+    const previewHolder = document.getElementById('cardHolderPreview');
+    const previewExpiry = document.getElementById('cardExpiryPreview');
+
+    // -------- Funciones de formateo y actualización de preview ----------
+    // Formatear número de tarjeta mientras escribe (agrega espacios cada 4 dígitos)
+    function formatCardNumber(value) {
+        // eliminar todo lo que no sea número
+        let cleaned = value.replace(/\D/g, '');
+        // agrupar de 4 en 4
+        let chunks = cleaned.match(/.{1,4}/g);
+        let formatted = chunks ? chunks.join(' ') : '';
+        return formatted;
+    }
+
+    function updateCardNumberPreview() {
+        let raw = cardNumberInput.value.replace(/\s/g, ''); // quitar espacios para contar dígitos
+        let formatted = formatCardNumber(raw);
+        cardNumberInput.value = formatted;   // actualizar input con formato
+        let displayValue = formatted;
+        if (displayValue === '') {
+            displayValue = '#### #### #### ####';
+        } else {
+            // opcional: rellenar con # los faltantes? se ve mejor los que ya tiene
+            let groups = displayValue.split(' ');
+            while(groups.length < 4) groups.push('####');
+            displayValue = groups.join(' ');
+        }
+        previewNumber.innerText = displayValue;
+    }
+
+    function updateCardHolderPreview() {
+        let name = cardHolderInput.value.toUpperCase();
+        if (name === '') {
+            previewHolder.innerText = 'TU NOMBRE';
+        } else {
+            previewHolder.innerText = name;
+        }
+    }
+
+    function updateExpiryPreview() {
+        let expiry = expiryInput.value;
+        // autoformato MM/AA mientras escribe
+        let clean = expiry.replace(/\D/g, '');
+        if (clean.length >= 3) {
+            let month = clean.substring(0,2);
+            let year = clean.substring(2,4);
+            expiry = month + '/' + year;
+        } else if (clean.length === 2) {
+            expiry = clean + '/';
+        } else {
+            expiry = clean;
+        }
+        expiryInput.value = expiry.substring(0,5);
+
+        let displayExp = expiryInput.value;
+        if (displayExp === '' || displayExp === '/') {
+            previewExpiry.innerText = 'MM/AA';
+        } else {
+            previewExpiry.innerText = displayExp;
+        }
+    }
+
+    // Manejar entrada de CVV: solo números y max 4 dígitos
+    function handleCvvInput() {
+        cvvInput.value = cvvInput.value.replace(/\D/g, '').substring(0,4);
+    }
+
+    // Eventos en tiempo real
+    cardNumberInput.addEventListener('input', updateCardNumberPreview);
+    cardHolderInput.addEventListener('input', updateCardHolderPreview);
+    expiryInput.addEventListener('input', updateExpiryPreview);
+    cvvInput.addEventListener('input', handleCvvInput);
+
+    // -------- TIMER (5 minutos) estilo "Time left to pay" ----------
+    let timeLeft = 5 * 60; // 5 minutos en segundos
+    const timerElement = document.getElementById('timerDisplay');
+
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function updateTimerDisplay() {
+        timerElement.innerText = formatTime(timeLeft);
+        if (timeLeft <= 0) {
+            timerElement.innerText = "00:00";
+            clearInterval(timerInterval);
+            alert("El tiempo para completar el pago ha expirado. Por favor recarga la página.");
+            // Opcional: deshabilitar botón o formulario
+            document.getElementById('paymentForm').querySelector('button').disabled = true;
+        }
+    }
+
+    const timerInterval = setInterval(() => {
+        if (timeLeft > 0) {
+            timeLeft--;
+            updateTimerDisplay();
+        } else {
+            clearInterval(timerInterval);
+        }
+    }, 1000);
+
+    // -------- Validación y envío del formulario con alerta interactiva ----------
+    const form = document.getElementById('paymentForm');
+
+    // Validar número de tarjeta (16 digitos, aunque acepta con espacios)
+    function validateCardNumber(numberStr) {
+        let digits = numberStr.replace(/\s/g, '');
+        return /^\d{16}$/.test(digits);
+    }
+
+    function validateExpiry(expiryStr) {
+        const regex = /^(0[1-9]|1[0-2])\/(\d{2})$/;
+        if (!regex.test(expiryStr)) return false;
+        // validar que no sea fecha pasada (opcional pero buena práctica)
+        const [month, year] = expiryStr.split('/');
+        const currentYear = new Date().getFullYear() % 100;
+        const currentMonth = new Date().getMonth() + 1;
+        const expYear = parseInt(year, 10);
+        const expMonth = parseInt(month, 10);
+        if (expYear < currentYear) return false;
+        if (expYear === currentYear && expMonth < currentMonth) return false;
+        return true;
+    }
+
+    function validateCVV(cvvStr) {
+        return /^\d{3,4}$/.test(cvvStr);
+    }
+
+    function validateHolder(nameStr) {
+        return nameStr.trim().length >= 3;
+    }
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        let cardNumberRaw = cardNumberInput.value;
+        let holder = cardHolderInput.value.trim();
+        let expiry = expiryInput.value;
+        let cvv = cvvInput.value;
+
+        let isValid = true;
+        let errorMessage = "";
+
+        if (!validateCardNumber(cardNumberRaw)) {
+            errorMessage += "❌ Número de tarjeta inválido (debe tener 16 dígitos).\n";
+            isValid = false;
+        }
+        if (!validateHolder(holder)) {
+            errorMessage += "❌ Ingresa el nombre completo del titular.\n";
+            isValid = false;
+        }
+        if (!validateExpiry(expiry)) {
+            errorMessage += "❌ Fecha de expiración inválida (formato MM/AA y fecha futura).\n";
+            isValid = false;
+        }
+        if (!validateCVV(cvv)) {
+            errorMessage += "❌ CVV debe ser de 3 o 4 dígitos.\n";
+            isValid = false;
+        }
+
+        if (!isValid) {
+            alert("Error en el formulario:\n" + errorMessage);
+            return;
+        }
+
+        // Si todo está OK:
+        alert("✅ Pago simulado exitoso.\nGracias por tu compra.");
+        // Aquí podrías redirigir o enviar datos a un servidor.
+        // Reiniciamos el timer no es necesario, pero mostramos éxito.
+        // Por estilo, podríamos limpiar o no.
+    });
+
+    // Opcional: prevenir que el espacio rompa el número en el input CVV no aplica
+    // Asegurar comportamiento móvil amigable
+    // Inicializar previews vacíos por si acaso
+    updateCardNumberPreview();
+    updateCardHolderPreview();
+    updateExpiryPreview();
+
+    // Añadir detalle: cuando se hace click en la tarjeta de preview no pasa nada, solo visual
+    // pequeña mejora para que el numero no tenga espacios extra al pegar
+    cardNumberInput.addEventListener('paste', function(e) {
+        setTimeout(() => {
+            updateCardNumberPreview();
+        }, 10);
+    });
+
+    // Ajuste extra: si el usuario escribe letras en el número, filtrarlas
+    cardNumberInput.addEventListener('keydown', function(e) {
+        // permitir teclas de control, backspace, tab, delete, flechas
+        const allowed = [
+            'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Control', 'Meta', 'v', 'V', 'c', 'C', 'x', 'X'
+        ];
+        if (allowed.includes(e.key) || e.key === 'a' && e.ctrlKey) return;
+        // si es número o espacio no bloqueamos, pero el formato despues lo limpia
+        if (!/[\d\s]/.test(e.key) && e.key !== ' ') {
+            e.preventDefault();
+        }
+    });
+</script>
+</body>
+</html>

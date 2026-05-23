@@ -1,0 +1,86 @@
+ 1. Diseño del sistema / arquitectura (15%) 
+Nivel Descripción 
+Excelente (15-14) Arquitectura clara, modular y bien justificada. Integra seguridad desde el 
+diseño (principio de mínimo privilegio, control de acceso). 
+Bueno (13-12) Arquitectura funcional con integración parcial de seguridad. 
+Suficiente (11-9) Diseño básico con poca claridad y sin enfoque sólido en seguridad. 
+Insuficiente (<9) No presenta arquitectura clara. 
+ 2. Manejo de procesos e hilos (15%) 
+Nivel Descripción 
+Excelente Implementa concurrencia correctamente (threads, mutex, semáforos) evitando 
+condiciones de carrera. 
+Bueno Funciona correctamente con pequeños errores de sincronización. 
+Suficiente Implementación básica con fallas. 
+Insuficiente No implementa correctamente. 
+ 3. Gestión de memoria (15%) 
+Nivel Descripción 
+Excelente Manejo eficiente y seguro (sin fugas, control de accesos, protección de memoria). 
+Bueno Funcional con detalles menores. 
+Suficiente Uso básico sin control adecuado. 
+Insuficiente Manejo incorrecto o inexistente. 
+ 4. Seguridad del sistema (15%) 
+Nivel Descripción 
+Excelente Implementa controles de seguridad: validación de entradas, permisos, 
+autenticación básica, prevención de vulnerabilidades. 
+Bueno Aplica seguridad básica con algunas omisiones. 
+Suficiente Seguridad mínima o superficial. 
+Insuficiente No considera seguridad. 
+ 5. Planificación de CPU (10%) 
+Nivel Descripción 
+Excelente Implementa y compara algoritmos (FCFS, SJF, Round Robin) con análisis. 
+Bueno Implementa correctamente al menos uno. 
+Suficiente 
+Implementación parcial. 
+Insuficiente 
+No implementa. 
+6. Manejo de E/S y sistema de archivos (10%) 
+Nivel Descripción 
+Excelente 
+Manejo correcto de archivos con control de accesos y protección de datos. 
+Bueno Funcional con detalles menores. 
+Suficiente 
+Insuficiente 
+Implementación limitada. 
+Incorrecto o inexistente. 
+7. Implementación técnica (10%) 
+Nivel Descripción 
+Excelente 
+Código limpio, modular, eficiente y seguro. 
+Bueno Funcional con algunos detalles. 
+Suficiente 
+Insuficiente 
+Poco estructurado. 
+No funcional. 
+8. Documentación técnica (5%) 
+Nivel Descripción 
+Excelente 
+Documento completo con arquitectura, pruebas y análisis de seguridad. 
+Bueno Documento claro pero incompleto. 
+Suficiente 
+Insuficiente 
+Documento básico. 
+Deficiente. 
+9. Presentación (5%) 
+Nivel Descripción 
+Excelente 
+Explica con dominio técnico y justifica decisiones (incluyendo seguridad). 
+Bueno Presentación clara con algunas dudas. 
+Suficiente 
+Insuficiente 
+Explicación limitada. 
+No domina el tema. 
+PONDERACIÓN FINAL 
+Criterio 
+% 
+Diseño / arquitectura 15% 
+Procesos e hilos 
+Memoria 
+Seguridad 
+CPU 10% 
+15% 
+15% 
+E/S y archivos 10% 
+Implementación 
+Documentación 
+Presentación 5% 
+TOTAL 100% 

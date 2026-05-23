@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Process Manager</title>
+</head>
+<body>
+    <h1>Testing Process Manager Flow</h1>
+    <div id="output"></div>
+    <button onclick="simulateCheckout()">Simulate Checkout</button>
+    <button onclick="clearStorage()">Clear Storage</button>
+
+    <script>
+        const output = document.getElementById('output');
+
+        function log(message) {
+            output.innerHTML += '<p>' + new Date().toLocaleTimeString() + ': ' + message + '</p>';
+            console.log(message);
+        }
+
+        // Simulate the checkout process
+        function simulateCheckout() {
+            log('Simulating checkout...');
+
+            const processData = {
+                id: `TICKET_${Date.now()}`,
+                items: [
+                    {id: 1, name: 'Test Car', price: 50000, quantity: 1}
+                ],
+                total: 50000,
+                timestamp: Date.now()
+            };
+
+            log('Storing process data in localStorage: ' + JSON.stringify(processData));
+            localStorage.setItem('pendingProcess', JSON.stringify(processData));
+
+            // Simulate page reload by checking pending processes
+            checkPendingProcesses();
+        }
+
+        function checkPendingProcesses() {
+            log('Checking for pending processes...');
+            const pendingProcess = localStorage.getItem('pendingProcess');
+            log('Pending process from localStorage: ' + pendingProcess);
+
+            if (pendingProcess) {
+                try {
+                    const processData = JSON.parse(pendingProcess);
+                    log('Parsed process data: ' + JSON.stringify(processData));
+                    addProcess(processData);
+                    localStorage.removeItem('pendingProcess');
+                    log('Process added and localStorage cleared');
+                } catch (error) {
+                    log('Error parsing pending process: ' + error.message);
+                }
+            } else {
+                log('No pending process found in localStorage');
+            }
+        }
+
+        function addProcess(processData) {
+            log('Adding process: ' + JSON.stringify(processData));
+
+            try {
+                log('Creating worker...');
+                const worker = new Worker('cpu_scheduler.js');
+                log('Worker created successfully');
+
+                worker.onmessage = function(e) {
+                    log('Received message from worker: ' + JSON.stringify(e.data));
+                };
+
+                worker.onerror = function(e) {
+                    log('Worker error: ' + e.message + ' at ' + e.filename + ':' + e.lineno);
+                };
+
+                log('Sending addProcess message to worker...');
+                worker.postMessage({
+                    action: 'addProcess',
+                    data: processData
+                });
+
+            } catch (error) {
+                log('Error creating worker or sending message: ' + error.message);
+            }
+        }
+
+        function clearStorage() {
+            localStorage.removeItem('pendingProcess');
+            log('localStorage cleared');
+        }
+
+        // Check for pending processes on page load
+        window.onload = function() {
+            log('Page loaded, checking for pending processes...');
+            checkPendingProcesses();
+        };
+    </script>
+</body>
+</html></content>
+<parameter name="filePath">c:\wamp64\www\SistemasII\01_Proyecto\test_worker.html</content>
+<parameter name="filePath">c:\wamp64\www\SistemasII\01_Proyecto\test_worker.html

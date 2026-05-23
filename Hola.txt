@@ -1,0 +1,3 @@
+Todo lo relacionado con el primer proyecto de Sistemas Operativos II (página web), programa relación cliente-servidor.
+
+solo para ver si es que si se actualiza mi carpeta solamente

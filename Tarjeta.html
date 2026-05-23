@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Pago Seguro - AutoHub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="tarjeta-credito-page">
+    <div class="container">
+        <div class="payment-wrapper">
+            <!-- VISTA PREVIA DE LA TARJETA -->
+            <div class="card-preview">
+                <div class="credit-card">
+                    <div class="card-brand">CREDIT</div>
+                    <div class="card-number-display" id="cardNumberPreview">#### #### #### ####</div>
+                    <div class="card-details">
+                        <div class="card-holder-area">
+                            TITULAR
+                            <div class="card-holder-name" id="cardHolderPreview">TU NOMBRE</div>
+                        </div>
+                        <div class="card-expiry-area">
+                            VENCE
+                            <div class="card-expiry-date" id="cardExpiryPreview">MM/AA</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timer-area">
+                    <span class="timer-label">Tiempo restante</span>
+                    <span class="timer-count" id="timerDisplay">05:00</span>
+                </div>
+            </div>
+
+            <!-- FORMULARIO DE PAGO -->
+            <div class="form-section">
+                <form id="paymentForm">
+                    <div class="form-group">
+                        <label>Número de tarjeta</label>
+                        <input type="text" id="cardNumber" maxlength="19" placeholder="1234 5678 9012 3456" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nombre del titular (como en tarjeta)</label>
+                        <input type="text" id="cardHolder" placeholder="Fulanito de Tal" autocomplete="off">
+                    </div>
+
+                    <div class="row-2cols">
+                        <div class="form-group">
+                            <label>Fecha vencimiento</label>
+                            <input type="text" id="expiryDate" maxlength="5" placeholder="MM/AA">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="password" id="cvv" maxlength="4" placeholder="123">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-pay">Pagar ahora</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

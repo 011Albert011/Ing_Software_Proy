@@ -1,0 +1,602 @@
+/* Login Page Styles */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+:root{
+    --header-height: 9rem;
+    --header-gap: 30rem;
+}
+
+.main-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    
+    /* AÑADE ESTA LÍNEA */
+    padding-top: 150px; /* Esto empuja el cuadro debajo de los 9rem del header */
+    box-sizing: border-box; /* Para que el padding no rompa el tamaño del contenedor */
+}
+
+.registration-container {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin-top: 2rem; 
+
+    margin: 160px auto 50px auto;
+    position: relative;
+}
+
+.login-page {
+    margin-top: var(--header-gap);
+    min-height: calc(100vh - var(--header-height));
+    background-color: var(--bg-color); /* Unificado con el fondo global */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    color: var(--text-color);
+} 
+
+/* Dark variant for registration page */
+.login-page.register-page {
+    background-color: var(--bg-color); /* Unificado con el fondo global */
+    padding: 4rem 2rem;
+}
+
+.login-page.register-page .login-box {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.04);
+}  
+
+.login-page.register-page .login-container {
+    grid-template-columns: 1fr 400px;
+}
+
+
+.login-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    width: 100%;
+    max-width: 1000px;
+    margin-top: calc(var(--content-gap) + 14px); /* separacion aumentada del header */
+}
+
+.login-box {
+    background: transparent;
+    border-radius: 12px;
+    box-shadow: none;
+    overflow: visible;
+} 
+
+/* Tabs */
+.tabs {
+    display: flex;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    background: transparent;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 0.9rem 1.2rem;
+    border: none;
+    background: transparent;
+    color: rgba(230,240,255,0.9);
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    text-align: center;
+}
+
+.tab-btn.active {
+    background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+    color: white;
+    box-shadow: 0 10px 30px rgba(2,6,23,0.5);
+}
+
+.tab-btn.active::after { content: none; }
+
+.tab-btn:hover { transform: translateY(-3px); }
+
+
+.tab-btn:hover {
+    color: var(--primary-color);
+}
+
+/* Forms */
+.auth-form {
+    padding: 2.5rem;
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: rgba(230,240,255,0.95);
+    font-size: 0.95rem;
+} 
+
+.form-group input {
+    width: 100%;
+    padding: 0.9rem 2.5rem 0.9rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+}
+
+.input-icon {
+    position: absolute;
+    right: 1rem;
+    top: 2.7rem;
+    font-size: 1.2rem;
+    pointer-events: none;
+}
+
+/* Form Options */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox input {
+    width: auto;
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.forgot-password {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.forgot-password:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-bottom: 1.5rem;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* Divider */
+.divider {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #999;
+    font-size: 0.85rem;
+    position: relative;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: calc(50% - 3rem);
+    height: 1px;
+    background: #ddd;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+/* Social Login */
+.social-login {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.social-btn {
+    padding: 0.9rem;
+    border: 2px solid rgba(255,255,255,0.06);
+    background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015));
+    color: #eaf2ff;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.social-btn:hover {
+    border-color: var(--primary-color);
+    background: #f9f9f9;
+}
+
+.google-btn:hover {
+    border-color: #4285F4;
+    color: #4285F4;
+}
+
+.facebook-btn:hover {
+    border-color: #1877F2;
+    color: #1877F2;
+}
+
+/* Password Strength */
+.password-strength {
+    margin-bottom: 1.5rem;
+}
+
+.strength-bar {
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+}
+
+.strength-bar::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 30%;
+    background: #ff6b6b;
+    border-radius: 2px;
+}
+
+.strength-text {
+    font-size: 0.85rem;
+    color: #999;
+}
+
+/* Benefits Section */
+.benefits-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.benefit-item {
+    text-align: center;
+    padding: 1.4rem;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    box-shadow: 0 8px 30px rgba(2,6,23,0.45);
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+    color: #e6f0ff;
+}
+
+.benefit-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 50px rgba(2,6,23,0.55);
+}
+
+.benefit-icon {
+    font-size: 2.6rem;
+    margin-bottom: 0.8rem;
+    display: inline-block;
+    background: rgba(255,255,255,0.03);
+    padding: 10px 12px;
+    border-radius: 12px;
+}
+
+.benefit-item h4 {
+    color: var(--accent-color);
+    margin-bottom: 0.25rem;
+    font-size: 1.05rem;
+}
+
+.benefit-item p {
+    color: rgba(230,240,255,0.85);
+    font-size: 0.9rem;
+}
+
+/* Make the benefits section look good on the register page */
+.login-page.register-page .benefit-item {
+    background: rgba(255,255,255,0.02);
+    box-shadow: 0 8px 40px rgba(2,6,23,0.6);
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .login-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .benefits-section {
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    .benefit-item {
+        padding: 1rem;
+    }
+
+    .benefit-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .benefit-item h4 {
+        font-size: 0.95rem;
+    }
+
+    .benefit-item p {
+        font-size: 0.8rem;
+    }
+
+    .auth-form {
+        padding: 2rem;
+    }
+
+    .social-login {
+        grid-template-columns: 1fr;
+    }
+
+    .nav {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-page {
+        padding: 1rem;
+    }
+
+    .login-container {
+        gap: 1rem;
+    }
+
+    .auth-form {
+        padding: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .tabs {
+        flex-direction: column;
+    }
+
+    .tab-btn {
+        padding: 1rem;
+    }
+
+    .benefits-section {
+        display: none;
+    }
+
+    .form-group input {
+        padding: 0.8rem 2.2rem 0.8rem 0.8rem;
+    }
+
+    .input-icon {
+        right: 0.8rem;
+        top: 2.4rem;
+        font-size: 1rem;
+    }
+}
+
+/* --- Custom centered wrapper and background (added per request) --- */
+/* Configuración General */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* Usamos tu imagen de fondo */
+    background: url('/img/1.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Contenedor Principal */
+.wrapper {
+    width: 420px;
+    background: rgba(11, 12, 16, 0.78); /* Fondo oscuro semitransparente */
+    /* Efecto cristal eliminado: se mantiene el fondo semitransparente */
+    color: white;
+    border-radius: 15px;
+    padding: 30px 40px;
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.wrapper h1 {
+    font-size: 36px;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+/* Cajas de Input */
+.input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 20px 0;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    outline: none;
+    border-radius: 40px;
+    font-size: 16px;
+    color: white;
+    padding: 0 45px 0 20px;
+    transition: 0.3s;
+}
+
+.input-box input:focus {
+    border-color: #07003D; /* Tu azul de marca al seleccionar */
+}
+
+.input-box input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Iconos de Boxicons */
+.input-box i {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: white;
+}
+
+/* Recordar y Olvidar */
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    margin: -15px 0 15px;
+}
+
+.remember-forgot label input {
+    accent-color: white;
+    margin-right: 5px;
+}
+
+.remember-forgot a {
+    color: white;
+    text-decoration: none;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+/* Botón de Acción */
+.btn {
+    width: 100%;
+    height: 45px;
+    background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 8px 30px rgba(2,6,23,0.45);
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+    font-weight: 700;
+    transition: 0.25s;
+}
+
+.btn:hover {
+    background: #07003D; /* Cambia a tu azul de marca */
+    color: white;
+    transform: scale(1.02);
+}
+
+/* Link de Registro */
+.register-link {
+    font-size: 14.5px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+
+.register-link p a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-link p a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive small screens */
+@media (max-width: 480px) {
+    .wrapper { width: 90%; padding: 20px; }
+    .wrapper h1 { font-size: 28px; }
+}
+

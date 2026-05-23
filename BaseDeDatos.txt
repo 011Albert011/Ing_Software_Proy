@@ -1,0 +1,67 @@
+create database SistemasII;
+
+use sistemasii;
+
+create table Usuario(
+Id_Usuario integer not null auto_increment,
+Nombre varchar(64) not null,
+Correo varchar(64) not null unique,
+Password varchar(64) not null,
+primary key(Id_Usuario)
+);
+
+use sistemasii;
+create table Carro(
+Id_Carro integer not null auto_increment,
+Nombre_C varchar(64),
+Categoria varchar(64),
+Imagen varchar (255),
+Descripcion varchar(255),
+Precio float not null,
+primary key (Id_Carro)
+);
+
+insert into Carro(Nombre_C,Categoria,Imagen, Descripcion,Precio) values
+('Toyota RAV4 2022', 'suv', 'ToyotaRAV42022.jpg' ,'SUV confiable, eficiente y espaciosa', 27999),
+('Honda Civic 2021','sedan','HondaCivic2021.avif', 'Sedán cómodo y económico', 21999),
+('Tesla Model 3', 'electrico','TeslaModel3.avif','100% eléctrico, autonomía extendida', 39999),
+('Ford Mustang GT','deportivo','FordMustangGT.avif','Deportivo, potente y elegante',55999),
+('Nissan Kicks','suv','NissanKicks.jpg','Compacto, ideal para ciudad',18999),
+('BMW Serie 3','sedan','BMWSerie3.avif','Lujo, performance y tecnología',34999),
+insert into Carro(Nombre_C,Categoria,Imagen, Descripcion,Precio, Stock) values
+('RB 17', 'Hypercar', 'RB17.jpg' ,'Un pseudo-coche de F1 biplaza diseñado para uso exclusivo en circuito, con tecnología de punta sin restricciones de la FIA.', 400000,10);
+
+CREATE TABLE ticket (
+Id_Ticket int NOT NULL AUTO_INCREMENT,
+Id_Usuario int NOT NULL,
+Fecha datetime DEFAULT NULL,
+Total_Pago decimal(10,2) DEFAULT NULL,
+PRIMARY KEY (Id_Ticket)
+);
+
+CREATE TABLE detalles_t (
+Id_Detalles int NOT NULL AUTO_INCREMENT,
+Id_Ticket int NOT NULL,
+Id_Carro int NOT NULL,
+Precio_Unitario decimal(10,2) DEFAULT NULL,
+Cantidad int NOT NULL,
+PRIMARY KEY (Id_Detalles)
+);
+
+alter table carro add column Stock integer;
+
+update carro set stock = 15 where Id_carro=1;
+update carro set stock = 11 where Id_carro=2;
+update carro set stock = 23 where Id_carro=3;
+update carro set stock = 12 where Id_carro=4;
+update carro set stock = 5 where Id_carro=5;
+update carro set stock = 7 where Id_carro=6;
+
+//nuevo atributo 
+alter table usuario add column Privilegio Integer default 1;
+
+
+
+// si requerimos hacer a un usario administrador
+
+UPDATE usuario SET Privilegio = 0 WHERE Id_Usuario = ; 
